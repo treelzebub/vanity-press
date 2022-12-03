@@ -2,7 +2,7 @@ import express from 'express';
 import timeout from 'connect-timeout';
 import moment from 'moment';
 import { Zine } from './model/Zine';
-import { parse } from './processing/parser';
+import { postlightParser } from './processing/postlightParser';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "1337");
@@ -26,7 +26,7 @@ app.post('/generate-zine', (req, res) => {
 
   // TODO validation
 
-  parse(body).then(r => {
+  postlightParser(body).then(r => {
     console.log(r.excerpt);
     res.status(200).send();
   }).catch(e => {
