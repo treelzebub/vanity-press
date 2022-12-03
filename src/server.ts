@@ -1,39 +1,37 @@
 import express from 'express';
+import timeout from 'connect-timeout';
 import moment from 'moment';
 import { Zine } from './model/Zine';
-import { parser } from './parser.js';
+import { parse } from './processing/parser';
 
-const app: express.Application = express();
+const app = express();
 const PORT = parseInt(process.env.PORT || "1337");
 
-// Body Parser Middleware
 app.use(express.json());
+app.use(timeout('120s'))
+
+//TODO dev only
 app.use((req, res, next) => {
   console.log(req.body);
-  next()
+  next();
 })
 
-app.get('/', (request, response) => {
-  response.send(`What is up, my dude. It is now ${moment().format()}.`);
+app.get('/', (req, res) => {
+  res.send(`What is up, my dude. It is now ${moment().format()}.`);
 });
 
-app.post('/generate-zine', (request, response) => {
+app.post('/generate-zine', (req, res) => {
   var success = false;
-  const body = request.body;
+  const body = req.body;
 
   // TODO validation
 
-  // response.send(parser(body)[0].title)
-  parser(body).then(r => {
-    try {
-      // const obj = JSON.parse(r);
-      // console.log(obj.excerpt);
-      console.log(r.excerpt);
-      response.status(200).send();
-    } catch (e) {
-      response.status(500).send();
+  parse(body).then(r => {
+    console.log(r.excerpt);
+    res.status(200).send();
+  }).catch(e => {
+    res.status(500).send();
       console.log(e);
-    }
   })
 });
 
