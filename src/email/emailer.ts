@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 require("dotenv").config();
 
-const email = async () => {
+const email = async (filename: string, email: string) => {
   const transport = nodemailer.createTransport({
     host: process.env.SMTP_HOST!,
     port: parseInt(process.env.SMTP_PORT!),
@@ -13,15 +13,19 @@ const email = async () => {
   });
 
   console.log('Sending email...')
-  const info = await transport.sendMail({
-    from: `"Vanity Press" <${process.env.SMTP_USER}>`,
-    to: process.env.TEST_RECIPIENT,
-    subject: "Hello",
-    text: "Hello world?",
-    html: "<b>Hello world?</b>"
-  });
-
-  console.log("Message sent: %s", info.messageId);
+  await transport.sendMail({
+    from: process.env.SMTP_USER,
+    to: email,
+    subject: '',
+    text: '',
+    attachments:[
+      {
+        filename
+      }
+    ]
+  }).then(info => {
+    console.log(`Email sent. Accepted: ${info.accepted}.\nRejected: ${info.rejected}.\nPending: ${info.pending}.\nResponse: ${info.response}.\n\n`)
+  }).catch(err => console.error(err));
 };
 
 export { email };

@@ -2,6 +2,7 @@ import { parse } from './parser';
 import { EpubRequest, Content, Config } from '../model/EpubRequest';
 import { Epub, Chapter } from '../model/Epub';
 import { epubFromModel } from './epubGenerator';
+import { email } from '../email/emailer';
 
 /**
  * Notes:
@@ -15,6 +16,10 @@ import { epubFromModel } from './epubGenerator';
  * 6. Format as .epub and return it.
  */
 const fromJson = (text: any) => JSON.parse(JSON.stringify(text));
+const filename = (title: string) => {
+  console.log(`filename() received ${title}`)
+  return title.replace(/[^a-z0-9_\-]/gi, '-') + '.epub';
+};
 
 const beginProcessing = async (body: any) => {
   const req: EpubRequest = {
@@ -26,18 +31,29 @@ const beginProcessing = async (body: any) => {
 
   // TODO preserve ordering after await
   const parsed = await Promise.all(
-    req.contents.map(it => parse(it.url))
+    req.contents.map(it => parse(it.url).catch(err => { return err }))
   );
   const chapters: Chapter[] = parsed.map(it => fromJson(it));
   console.log(`Parsed ${chapters.length} urls.`);
-  
+
   const epub: Epub = {
+    filename: filename(req.title),
     title: req.title,
     author: req.email,
     chapters
   };
 
-  return epubFromModel(epub);
+  console.log(`Generating ${epub.filename}...`)
+  epubFromModel(epub).then(
+    () => {
+      console.log("Ebook generated successfully!");
+      return email(epub.filename, req.email);
+    },
+    err => {
+      console.error(`Failed to generate ${epub.filename}:`, err);
+      return err;
+    }
+  );
 }
 
 export { beginProcessing };

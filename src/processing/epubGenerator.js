@@ -1,9 +1,5 @@
 import epub from 'epub-gen';
 
-const filename = (title) => {
-  return title.replace(/[^a-z0-9_\-]/gi, '-') + '.epub';
-};
-
 const content = (chapters) => {
   return chapters.map(it => (
     {
@@ -17,7 +13,7 @@ const optionsFromModel = (model) => {
   return ({
     title: model.title,
     author: model.author,
-    output: filename(model.title),
+    output: model.filename,
     content: content(model.chapters)
   });
 };
