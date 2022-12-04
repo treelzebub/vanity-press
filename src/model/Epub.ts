@@ -10,11 +10,12 @@ export interface Chapter {
   word_count: number;
   direction: string;
   total_pages: number;
-  rendered_pages: number; // Probably a reasonable proxy for parsing success
-};
+  rendered_pages: number; // Probably a reasonable proxy for success
+}
 
 export interface Epub {
+  filename: string;
   title: string;
   author: string;
   chapters: Chapter[];
-};
+}
