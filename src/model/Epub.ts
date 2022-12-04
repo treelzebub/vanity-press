@@ -15,5 +15,6 @@ export interface Chapter {
 
 export interface Epub {
   title: string;
+  author: string;
   chapters: Chapter[];
 };

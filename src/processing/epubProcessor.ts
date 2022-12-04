@@ -1,6 +1,7 @@
 import { parse } from './parser';
 import { EpubRequest, Content, Config } from '../model/EpubRequest';
 import { Epub, Chapter } from '../model/Epub';
+import { epubFromModel } from './epubGenerator';
 
 /**
  * Notes:
@@ -31,9 +32,11 @@ const beginProcessing = async (body: any) => {
   
   const epub: Epub = {
     title: req.title,
+    author: req.email,
     chapters: chapters
   };
-  return epub;
+
+  return epubFromModel(epub);
 }
 
 export { beginProcessing };
