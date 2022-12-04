@@ -23,7 +23,7 @@ const optionsFromModel = (model) => {
 };
 
 const epubFromModel = async (model) => {
-  return new epub(optionsFromModel(model)).promise
+  return new epub(optionsFromModel(model)).promise;
 };
 
 export { epubFromModel };

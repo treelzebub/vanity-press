@@ -25,15 +25,16 @@ const beginProcessing = async (body: any) => {
   };
 
   // TODO preserve ordering after await
-  const promises = req.contents.map(it => parse(it.url))
-  const parsed = await Promise.all(promises)
+  const parsed = await Promise.all(
+    req.contents.map(it => parse(it.url))
+  );
   const chapters: Chapter[] = parsed.map(it => fromJson(it));
   console.log(`Parsed ${chapters.length} urls.`);
   
   const epub: Epub = {
     title: req.title,
     author: req.email,
-    chapters: chapters
+    chapters
   };
 
   return epubFromModel(epub);

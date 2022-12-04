@@ -7,7 +7,7 @@ const app = express();
 const PORT = parseInt(process.env.PORT || "1337");
 
 app.use(express.json());
-app.use(timeout('120s'))
+app.use(timeout('30s'));
 
 app.use((req, res, next) => {
   console.log(req.body);
@@ -16,12 +16,12 @@ app.use((req, res, next) => {
 
 app.get('/email-test', async (req, res) => {
   email().then(() => {
-      console.log("Done.")
-      res.status(200).send();
-    }).catch(err => {
-      console.error(err)
-      res.status(500).send();
-    });
+    console.log("Done.");
+    res.status(200).send();
+  }).catch(err => {
+    console.error(err);
+    res.status(500).send();
+  });
 });
 
 app.post('/generate-epub', async (req, res) => {
