@@ -13,7 +13,13 @@ app.use(logger('dev'));
 app.use(handleError);
 
 app.post('/generate-epub', async (req, res) => {
-  beginProcessing(req.body);
+  beginProcessing(req.body).then(
+    () => res.status(200).send(),
+    (err) => {
+      console.error(err);
+      res.status(500).send();
+    }
+  );
 });
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
