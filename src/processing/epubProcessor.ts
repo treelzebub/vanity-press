@@ -17,7 +17,6 @@ import { email } from '../email/emailer';
  */
 const fromJson = (text: any) => JSON.parse(JSON.stringify(text));
 const filename = (title: string) => {
-  console.log(`filename() received ${title}`)
   return title.replace(/[^a-z0-9_\-]/gi, '-') + '.epub';
 };
 

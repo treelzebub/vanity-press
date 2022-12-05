@@ -16,15 +16,21 @@ const email = async (filename: string, email: string) => {
   await transport.sendMail({
     from: process.env.SMTP_USER,
     to: email,
-    subject: '',
-    text: '',
+    subject: 'Your ebook is ready!',
+    text: 'Please enjoy your bespoke, artisinal collection of articles!',
+    html: '<div>Please enjoy your bespoke, artisinal collection of articles!</div>',
     attachments:[
       {
         filename
       }
-    ]
+    ],
+    dkim: {
+      domainName: process.env.DKIM_DOMAIN!,
+      keySelector: process.env.DKIM_SELECTOR!,
+      privateKey: process.env.DKIM_KEY!
+    }
   }).then(info => {
-    console.log(`Email sent. Accepted: ${info.accepted}.\nRejected: ${info.rejected}.\nPending: ${info.pending}.\nResponse: ${info.response}.\n\n`)
+    console.log(`Email sent. Accepted: ${info.accepted}\nRejected: ${info.rejected}\nPending: ${info.pending || 'none'}.\nResponse: ${info.response}.\n\n`)
   }).catch(err => console.error(err));
 };
 
