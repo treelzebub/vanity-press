@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Vanity Press",
+  "version": "0.1",
+  "description": "TODO - Description",
+  
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["vanity-press.js"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "*://*/*"
+  ]
+}

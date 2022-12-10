@@ -1,0 +1,16 @@
+{
+  "name": "vanity-press",
+  "version": "1.0.0",
+  "description": "Create epub zines from a list of URLs, then send to your eReader!",
+  "main": "vanity-press.js",
+  "scripts": {
+    "build": "browserify vanity-press.js -o bundle.js && web-ext build -i . -i package*"
+  },
+  "author": "tre@treelzebub.net",
+  "license": "ISC",
+  "dependencies": {
+    "@mozilla/readability": "^0.4.2",
+    "browserify": "^17.0.0",
+    "web-ext": "^7.4.0"
+  }
+}
