@@ -1,6 +1,6 @@
 # Manually added
-.env
-/dist
+*/.env
+*/dist
 */debug
 *.epub
 
