@@ -1,8 +1,8 @@
 import express from 'express';
 import timeout from 'connect-timeout';
+import logger from 'morgan';
 import handleError from './errorHandler';
 import { beginProcessing } from './processing/epubProcessor';
-import logger from 'morgan';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "1337");

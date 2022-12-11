@@ -2,15 +2,21 @@
   "name": "vanity-press-backend",
   "version": "0.0.1",
   "description": "",
-  "main": "server.js",
-  "scripts": {
-    "start": "tsc && node dist/server.js",
-    "dev": "tsc && nodemon src/server.ts",
-    "build": "tsc"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+
+  "main": "server.js",
+  "engines": {
+    "node": "18.x.x"
+  },
+
+  "scripts": {
+    "start": "tsc && node dist/server.js",
+    "dev": "nodemon src/server.ts",
+    "build": "tsc"
+  },
+  
   "dependencies": {
     "@postlight/parser": "^2.2.3",
     "connect-timeout": "^1.9.0",
@@ -21,6 +27,7 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0"
   },
+
   "devDependencies": {
     "@types/connect-timeout": "^0.0.36",
     "@types/express": "^4.17.14",
