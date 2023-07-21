@@ -28,7 +28,10 @@ const email = async (filename: string, email: string) => {
   }).then(info => {
     console.log(`Email sent. Accepted: ${info.accepted}\nRejected: ${info.rejected}\nPending: ${info.pending || 'none'}.\nResponse: ${info.response}.\n\n`)
     return
-  }).catch(err => { return err });
+  }).catch(err => { 
+    console.error(err)
+    return err 
+  });
 };
 
 export { email };
