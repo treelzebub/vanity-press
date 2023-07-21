@@ -14,8 +14,8 @@ const email = async (filename: string, email: string) => {
   });
 
   await transport.sendMail({
-    from: process.env.SMTP_USER,
-    to: email,
+    from: `"Vanity Press" <${process.env.SMTP_USER}>`,
+    to: `${email}, ${email}`,
     subject: 'Your ebook is ready!',
     text: 'Please enjoy your bespoke, artisinal collection of articles!',
     attachments:[
