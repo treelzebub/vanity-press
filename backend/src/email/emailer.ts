@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 require("dotenv").config();
 
 const email = async (filename: string, email: string) => {
+  console.log(`Sending email to ${email} ...`)
   const transport = nodemailer.createTransport({
     host: process.env.SMTP_HOST!,
     port: parseInt(process.env.SMTP_PORT!),
@@ -12,7 +13,6 @@ const email = async (filename: string, email: string) => {
     }
   });
 
-  console.log('Sending email...')
   await transport.sendMail({
     from: process.env.SMTP_USER,
     to: email,
